@@ -1,0 +1,24 @@
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+
+# Ambiente — segredo nunca entra no git
+.env
+.env.local
+.env*.local
+
+# Logs e depuração
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Supabase local
+supabase/.branches
+supabase/.temp

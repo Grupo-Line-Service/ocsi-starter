@@ -1,0 +1,61 @@
+/* ---------------------------------------------------------------------------
+   O NÚCLEO VISUAL VIVE EM @ocsi/ui (repo Grupo-Line-Service/ocsi-ui).
+
+   Botão, card, input, barra de filtros, KPI, shell, cabeçalho de página: tudo
+   lá. Aqui fica só o que for EXCLUSIVO deste produto.
+
+   ⚠️ Mudou uma medida do núcleo? Muda no PACOTE, não aqui — assim a mudança
+   chega a todos os produtos OCSI, e não só a este.
+
+   ⚠️ Os @import precisam ser as PRIMEIRAS regras do arquivo (regra do CSS) e
+   nesta ORDEM: o tema vem depois do contrato para poder sobrescrevê-lo, e o
+   base vem depois do tema para já enxergar as cores certas.
+
+   O tema do inquilino (app/layout.tsx) entra DEPOIS de tudo isso, em <style>,
+   e por isso vence — é ele que pinta o produto com a cor do cliente.
+--------------------------------------------------------------------------- */
+@import "@ocsi/ui/css/tokens.css";
+@import "@ocsi/ui/temas/saas.css";
+@import "@ocsi/ui/css/base.css";
+@import "@ocsi/ui/css/shell.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(
+    --fonte-app,
+    var(--font-nunito, "Nunito"),
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.account-menu-item:hover {
+  background: var(--surface-2);
+}
