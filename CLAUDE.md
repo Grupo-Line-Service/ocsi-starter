@@ -1,8 +1,13 @@
 # CLAUDE.md — [NOME DO PRODUTO]
 
-> **TODO(produto novo):** troque o nome acima, preencha a seção "O produto" e
-> apague este aviso. O resto vale para todos os produtos OCSI — **não mexa sem
-> motivo**, e se mexer, leve a mudança para o starter.
+> **TODO(produto novo):** troque o nome acima, preencha a seção "O produto",
+> apague o `MANUTENCAO-DO-STARTER.md` (é do template) e apague este aviso.
+> O resto vale para todos os produtos OCSI — **não mexa sem motivo**, e se
+> mexer, leve a mudança para o starter.
+>
+> ⚠️ **Este produto é PRIVADO** (o starter e o `@ocsi/ui` é que são públicos).
+> Regra de negócio, integração contratada e dado de cliente vivem AQUI e não
+> sobem para o núcleo nem para o template.
 
 ## O produto
 

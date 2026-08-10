@@ -22,10 +22,13 @@ condição.**
 ## Começar
 
 1. **Use this template** no GitHub → nomeie o repositório do produto.
+   ⚠️ **Crie o repositório do produto como PRIVADO** — ele vai receber regra de
+   negócio. Só o starter e o `@ocsi/ui` são públicos.
 2. `npm install`
 3. `cp .env.example .env.local` e preencha com o seu projeto Supabase.
 4. Aplique a migração inicial (`supabase/migrations/`) no seu projeto.
 5. `npm run dev`
+6. Apague o `MANUTENCAO-DO-STARTER.md` — ele é do template, não do seu produto.
 
 Sem escrever uma linha você já tem: login, shell com menu lateral, tela de
 início, tela de exemplo no padrão, tema por organização e CI.
