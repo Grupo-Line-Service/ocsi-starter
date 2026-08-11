@@ -73,6 +73,26 @@ cliente — generalizar para o catálogo é decisão COMERCIAL do dono, nunca
 encosta nos repositórios públicos (`ocsi-ui`, `ocsi-starter`) — nem como
 exemplo, nem em teste, nem em comentário.
 
+### 2.1 Copiar tela do gabarito — a RECEITA (obrigatória, passo a passo)
+
+"Copiar" não é "fazer parecido". O retrabalho de 10-11/08/2026 veio de telas
+*reescritas de memória ou a partir do resumo da issue* — ficavam "quase iguais"
+e perdiam campo. A receita é esta, sem etapa opcional:
+
+1. **Abrir o ARQUIVO REAL do gabarito e ler.** O gabarito é o código do
+   `saas-gestao` (clone local em `C:\dev\saas-gestao`, ou o repositório no
+   GitHub). Issue, memória e print **não são fonte** — são apontadores para o
+   arquivo.
+2. **Copiar o arquivo INTEIRO** (`cp`, não digitação). Estrutura, nomes,
+   textos, estilos: tudo vem junto.
+3. **Mudar SOMENTE**: caminhos de import e a camada de dados (actions/queries
+   apontando para o banco do produto). Nada de "melhorar" no caminho.
+4. **Rodar `diff` contra o gabarito e justificar cada linha diferente.** Linha
+   que você não sabe explicar é erro. A prova de cópia bem feita é um diff que
+   se lê em um minuto.
+5. **Validar RODANDO** — abrir a tela logado. Build verde não prova que a tela
+   abre (`useActionState` compilou e derrubou produção em 10/08).
+
 ### 3. Um agente por vez no repositório
 
 Antes de escrever, confira branch e commits recentes. Se outro agente está
