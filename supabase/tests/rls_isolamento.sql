@@ -62,14 +62,27 @@ begin
   end if;
 
   -- --- Visitante não autenticado não vê nada -------------------------------
+  -- ⚠️ Existem DUAS formas de estar certo aqui, e o teste precisa aceitar as
+  -- duas — senão ele reprova a mais segura:
+  --   (a) o banco NEGA o acesso (`revoke all ... from anon` da migração,
+  --       defesa em profundidade) → erro `insufficient_privilege`. É o
+  --       resultado MAIS FORTE: a RLS deixa de ser a única barreira;
+  --   (b) o acesso passa e a RLS devolve 0 linhas.
+  -- Só é falha o anônimo VER LINHA. Escrito só com (b), este teste derrubava o
+  -- CI do template exatamente por a migração ser mais rigorosa que ele.
   reset role;
   set local role anon;
   perform set_config('request.jwt.claims', null, true);
 
-  select count(*) into visto from public.organizacoes;
-  if visto <> 0 then
-    raise exception 'VAZOU: anônimo enxerga % organizações (esperado 0)', visto;
-  end if;
+  begin
+    select count(*) into visto from public.organizacoes;
+    if visto <> 0 then
+      raise exception 'VAZOU: anônimo enxerga % organizações (esperado 0)', visto;
+    end if;
+  exception
+    when insufficient_privilege then
+      raise notice 'anon sem privilégio na tabela (defesa em profundidade) — ok';
+  end;
 
   reset role;
   raise notice 'RLS OK — isolamento entre inquilinos preservado.';
