@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Nunito, Inter, Poppins, Lora } from "next/font/google";
+import "@ocsi/ui/fontes/fontes.css";
 import { cssDoTema, temaValido, corValida } from "@ocsi/ui/lib/tema";
 import { createClient } from "@/lib/supabase/server";
 import "./globals.css";
 
-// Tipografia por inquilino: as quatro famílias são auto-hospedadas via
-// next/font e o tema escolhe qual vale, pela CSS var --fonte-app.
-const nunito = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap", variable: "--font-nunito" });
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap", variable: "--font-inter" });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap", variable: "--font-poppins" });
-const lora = Lora({ subsets: ["latin"], weight: ["400", "500", "600", "700"], display: "swap", variable: "--font-lora" });
+// Tipografia por inquilino: as quatro famílias vêm do NÚCLEO
+// (@ocsi/ui/fontes) e o tema escolhe qual vale, pela CSS var --fonte-app.
+// ⚠️ NÃO trocar por next/font/google: parece igual, mas o download acontece
+// no BUILD — o deploy passa a depender de o fonts.gstatic.com estar no ar, e
+// o CI cai em commit que só mexeu em .md (aconteceu em 11/08/2026).
 
 export const metadata: Metadata = {
   // TODO(produto novo): troque o nome e a descrição.
@@ -57,7 +56,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="pt-BR" className={`${nunito.variable} ${inter.variable} ${poppins.variable} ${lora.variable}`}>
+    <html lang="pt-BR">
       <body>
         {temaCss && <style dangerouslySetInnerHTML={{ __html: temaCss }} />}
         {children}
