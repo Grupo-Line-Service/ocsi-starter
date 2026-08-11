@@ -58,13 +58,25 @@ jobs:
         run: psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -f supabase/tests/rls_isolamento.sql
 
       - name: Tipos do banco reproduzíveis (schema × lib/database.types.ts)
+        id: tipos
         # Sem isto, uma tabela nova fica sem tipo e ninguém percebe até o
         # TypeScript reclamar em outro lugar, dias depois.
         run: |
-          supabase gen types typescript --local | node scripts/normalizar-tipos.mjs > /tmp/database.types.gen.ts
+          supabase gen types typescript --local > /tmp/database.types.bruto.ts
+          node scripts/normalizar-tipos.mjs < /tmp/database.types.bruto.ts > /tmp/database.types.gen.ts
           node scripts/normalizar-tipos.mjs < lib/database.types.ts > /tmp/database.types.atual.ts
           if ! diff -q /tmp/database.types.atual.ts /tmp/database.types.gen.ts > /dev/null; then
             diff -u /tmp/database.types.atual.ts /tmp/database.types.gen.ts | head -60 || true
-            echo "::error::lib/database.types.ts diverge do schema das migrações — rode 'npm run db:types' e commite."
+            echo "::error::lib/database.types.ts diverge do schema das migrações — baixe o artefato 'database.types.ts' desta execução e commite (ou rode 'npm run db:types' se tiver Docker)."
             exit 1
           fi
+
+      # Acusar a divergência sem entregar o arquivo obriga quem não tem Docker
+      # a adivinhar. O artefato é o arquivo PRONTO para commitar.
+      - name: Publicar os tipos gerados (para commitar sem Docker)
+        if: failure() && steps.tipos.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: database.types.ts
+          path: /tmp/database.types.bruto.ts
+          retention-days: 7
