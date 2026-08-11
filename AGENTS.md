@@ -51,6 +51,28 @@ Antes de criar componente, classe ou utilitário, consulte o
 [catálogo do núcleo](https://github.com/Grupo-Line-Service/ocsi-ui/blob/main/docs/catalogo.md).
 **Se está lá, IMPORTE; nunca recrie com outro nome.**
 
+**O limite da distribuição** (regra do dono, 11/08/2026): a base é MODULAR —
+**o núcleo vale para todos; módulo é eletivo, por cliente.** Distribuir não é
+empurrar tudo para todo mundo:
+
+| Camada | Exemplo | Chega a quem |
+|---|---|---|
+| Núcleo | governança, `@ocsi/ui`, esqueleto do starter | **todos**, automaticamente |
+| Módulo eletivo | fiscal, frota, resíduos, VMS | **só quem ativou** (`organizacao_modulos`) |
+| Sob medida | módulo construído para UM cliente | **só aquele cliente** |
+| Específico do produto | telas e regras do domínio | só o próprio repositório |
+
+Copiar peça de módulo para o núcleo "porque dois produtos usam" quebra a
+cobrança (módulo é o que se vende) e obriga todo mundo a carregar o que não
+comprou. Se dois produtos precisam do mesmo módulo, o caminho é o HUB — ativa-se
+o módulo para o cliente, não se duplica o código.
+
+O **sob medida** tem duas regras a mais: (1) nasce e morre atrás do gate do
+cliente — generalizar para o catálogo é decisão COMERCIAL do dono, nunca
+"aproveitamento" técnico; (2) por carregar negócio do cliente, **jamais**
+encosta nos repositórios públicos (`ocsi-ui`, `ocsi-starter`) — nem como
+exemplo, nem em teste, nem em comentário.
+
 ### 3. Um agente por vez no repositório
 
 Antes de escrever, confira branch e commits recentes. Se outro agente está
