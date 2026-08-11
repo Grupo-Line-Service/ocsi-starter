@@ -83,6 +83,24 @@ create policy usuarios_da_minha_org on public.usuarios
 -- junto com o seu modelo de permissão — nunca libere geral "para destravar".
 
 -- ---------------------------------------------------------------------------
+-- GRANT — política NÃO é privilégio (as duas coisas são obrigatórias)
+--
+-- ⚠️ ARMADILHA CLÁSSICA DO POSTGRES, e o teste de RLS pegou: habilitar RLS e
+-- escrever a policy NÃO dá acesso a nada. A policy responde "QUAIS LINHAS";
+-- o grant responde "PODE LER A TABELA?". Sem o grant, o banco devolve
+-- `permission denied for table organizacoes` — mesmo com a policy perfeita.
+--
+-- Sintoma quando falta: o app parece quebrado logo depois do login, e o erro
+-- não fala em RLS nenhuma — fala em permissão, o que manda a investigação
+-- para o lado errado.
+--
+-- Regra para tabela nova: `enable row level security` + `create policy` +
+-- `grant` — os três, na mesma migração, sempre.
+-- ---------------------------------------------------------------------------
+grant select on public.organizacoes to authenticated;
+grant select on public.usuarios     to authenticated;
+
+-- ---------------------------------------------------------------------------
 -- Papel anônimo: zero privilégio (defesa em profundidade).
 -- O RLS não deve ser a única barreira. RPC pública nova exige grant EXPLÍCITO
 -- na própria migração — e atenção: recriar uma função reaplica o ACL padrão em

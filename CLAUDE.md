@@ -54,6 +54,11 @@ tudo em **`@ocsi/ui`**.
 2. **RLS em toda tabela**, com um caso novo em
    `supabase/tests/rls_isolamento.sql`. RLS quebrado **não dá erro**: mostra
    dado de outro cliente em silêncio, e você descobre pelo cliente reclamando.
+   ⚠️ **Tabela nova exige TRÊS coisas na mesma migração**: `enable row level
+   security` + `create policy` + **`grant`**. Política não é privilégio — a
+   policy diz *quais linhas*, o grant diz *se pode ler a tabela*. Faltando o
+   grant, o banco responde `permission denied for table X` mesmo com a policy
+   perfeita, e o erro não menciona RLS — manda você investigar o lado errado.
 3. **`service_role` JAMAIS no runtime do cliente.** Ela ignora RLS por completo.
    Só em `lib/supabase/admin.ts`, só no servidor, e nunca com prefixo
    `NEXT_PUBLIC_`.
