@@ -1,105 +1,252 @@
-/**
- * Tipos do banco.
- *
- * ⚠️ Este arquivo é GERADO — não edite à mão. Depois de cada migração:
- *
- *     npm run db:types
- *
- * Esquecer disto tem uma assinatura clara: o TypeScript não conhece a coluna
- * nova, ou o CI acusa que os tipos divergem do schema. (No saas-gestao uma
- * tabela ficou dois dias sem tipo por causa disso.)
- *
- * O conteúdo abaixo é o mínimo do núcleo, para o projeto compilar antes da
- * primeira geração.
- */
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       organizacoes: {
         Row: {
-          cantos: string | null;
-          cor_primaria: string | null;
-          cor_secundaria: string | null;
-          criado_em: string;
-          documento: string | null;
-          fonte: string | null;
-          id: string;
-          logo_url: string | null;
-          nome: string;
-          tema: string | null;
-        };
+          cantos: string | null
+          cor_primaria: string | null
+          cor_secundaria: string | null
+          criado_em: string
+          documento: string | null
+          fonte: string | null
+          id: string
+          logo_url: string | null
+          nome: string
+          tema: string | null
+        }
         Insert: {
-          cantos?: string | null;
-          cor_primaria?: string | null;
-          cor_secundaria?: string | null;
-          criado_em?: string;
-          documento?: string | null;
-          fonte?: string | null;
-          id?: string;
-          logo_url?: string | null;
-          nome: string;
-          tema?: string | null;
-        };
+          cantos?: string | null
+          cor_primaria?: string | null
+          cor_secundaria?: string | null
+          criado_em?: string
+          documento?: string | null
+          fonte?: string | null
+          id?: string
+          logo_url?: string | null
+          nome: string
+          tema?: string | null
+        }
         Update: {
-          cantos?: string | null;
-          cor_primaria?: string | null;
-          cor_secundaria?: string | null;
-          criado_em?: string;
-          documento?: string | null;
-          fonte?: string | null;
-          id?: string;
-          logo_url?: string | null;
-          nome?: string;
-          tema?: string | null;
-        };
-        Relationships: [];
-      };
+          cantos?: string | null
+          cor_primaria?: string | null
+          cor_secundaria?: string | null
+          criado_em?: string
+          documento?: string | null
+          fonte?: string | null
+          id?: string
+          logo_url?: string | null
+          nome?: string
+          tema?: string | null
+        }
+        Relationships: []
+      }
       usuarios: {
         Row: {
-          ativo: boolean;
-          criado_em: string;
-          email: string | null;
-          id: string;
-          nome: string;
-          organizacao_id: string;
-        };
+          ativo: boolean
+          criado_em: string
+          email: string | null
+          id: string
+          nome: string
+          organizacao_id: string
+        }
         Insert: {
-          ativo?: boolean;
-          criado_em?: string;
-          email?: string | null;
-          id: string;
-          nome?: string;
-          organizacao_id: string;
-        };
+          ativo?: boolean
+          criado_em?: string
+          email?: string | null
+          id: string
+          nome?: string
+          organizacao_id: string
+        }
         Update: {
-          ativo?: boolean;
-          criado_em?: string;
-          email?: string | null;
-          id?: string;
-          nome?: string;
-          organizacao_id?: string;
-        };
+          ativo?: boolean
+          criado_em?: string
+          email?: string | null
+          id?: string
+          nome?: string
+          organizacao_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "usuarios_organizacao_id_fkey";
-            columns: ["organizacao_id"];
-            isOneToOne: false;
-            referencedRelation: "organizacoes";
-            referencedColumns: ["id"];
+            foreignKeyName: "usuarios_organizacao_id_fkey"
+            columns: ["organizacao_id"]
+            isOneToOne: false
+            referencedRelation: "organizacoes"
+            referencedColumns: ["id"]
           },
-        ];
-      };
-    };
-    Views: Record<never, never>;
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
     Functions: {
-      organizacao_atual: {
-        Args: Record<PropertyKey, never>;
-        Returns: string;
-      };
-    };
-    Enums: Record<never, never>;
-    CompositeTypes: Record<never, never>;
-  };
-};
+      organizacao_atual: { Args: never; Returns: string }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {},
+  },
+} as const
+

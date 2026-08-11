@@ -66,7 +66,11 @@ tudo em **`@ocsi/ui`**.
    ordem alfabética: misturar convenções faz uma migração rodar antes da tabela
    que ela altera existir — e quebra só no CI, porque produção já tem o schema
    montado. (Custou dois dias de CI vermelho no `saas-gestao`.)
-5. **Depois de migração, `npm run db:types` e commite.**
+5. **Depois de migração, `npm run db:types` e commite.** `lib/database.types.ts`
+   é **gerado** — não escreva nada nele à mão, nem comentário: o CI compara
+   byte a byte com o que sai do schema, e um cabeçalho explicativo já bastou
+   para deixar o CI do template vermelho. Sem Docker na máquina? O CI publica o
+   arquivo pronto como artefato `database.types.ts` quando acusa a divergência.
 6. **Botão de ação trava contra duplo clique**: desabilita, vira gerúndio
    ("Salvando…"). Sem isso, dois cliques viram duas cobranças.
 7. **Rota nova é FECHADA por padrão.** Para torná-la pública, acrescente na
