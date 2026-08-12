@@ -36,6 +36,36 @@ como **defeito** uma cobrança que era **legítima** (SAAS-224).
 **Várias equipes consomem os mesmos documentos. Documento desatualizado não erra
 sozinho — ele multiplica o erro pelo número de times.**
 
+### 1.1 Alterou um campo ou conceito? VARRA tudo que ele toca — antes do "pronto"
+
+> Regra do dono, 12/08/2026: *"sempre que for alterar ou corrigir algo, precisa
+> analisar tudo que aquele campo faz no sistema todo — alterou apenas o que eu
+> pedi e não olhou pra frente o que vai acontecer ali."*
+
+Consertar **só o ponto reportado** não é entrega — é a primeira rodada de um
+pingue-pongue. Custou no mesmo dia (12/08/2026), em dois produtos: no SaaS, o
+`vencimento_dia` entrou nos 3 motores de faturamento mas ninguém varreu as
+telas — Revisão do wizard, ficha do contrato e projeção de vencimentos
+continuaram exibindo datas da regra velha, e foram **3 reportes** do dono até a
+última tela mentirosa cair; no RG Ambiental, **5 telas** repetiam o mesmo
+defeito e só 1 foi corrigida.
+
+A varredura, sem etapa opcional:
+
+1. **`grep` pelo campo E pelos conceitos que ele governa** (ex.:
+   `vencimento_dia` → também "vencimento", a âncora de parcelas, o dia padrão
+   da organização) no repositório inteiro: motores, actions, telas, e-mails,
+   PDFs, exports, projeções, testes.
+2. **Listar cada superfície que LÊ ou EXIBE o conceito** e conferir uma a uma
+   depois da mudança. Tela que mostra dado derivado da regra velha é **bug**,
+   mesmo com o motor certo — para quem usa, a tela É o sistema.
+3. **O que não couber no commit, listar explicitamente** ("estas superfícies
+   também tocam nisso; não mexi porque…"). Omissão silenciosa é o erro; a
+   lista é aceitável.
+4. Vale nos dois sentidos: mudou motor → varre telas; mudou tela → confere o
+   motor. E vale para **conceito de negócio** que atravessa etapas (unidade,
+   quantidade, preço, frete): mexeu numa etapa da esteira, varre as demais.
+
 ### 2. Regra COPIADA não é regra DISTRIBUÍDA
 
 O que precisa valer em todo lugar mora em **um** lugar e é **referenciado ou
