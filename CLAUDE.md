@@ -71,8 +71,13 @@ tudo em **`@ocsi/ui`**.
    byte a byte com o que sai do schema, e um cabeçalho explicativo já bastou
    para deixar o CI do template vermelho. Sem Docker na máquina? O CI publica o
    arquivo pronto como artefato `database.types.ts` quando acusa a divergência.
-6. **Botão de ação trava contra duplo clique**: desabilita, vira gerúndio
-   ("Salvando…"). Sem isso, dois cliques viram duas cobranças.
+6. **Botão de ação trava contra duplo clique**: use `BotaoAcao`
+   (`app/painel/_components/botao-acao.tsx`, o mesmo do SaaS) em TODO form de
+   server action — desabilita, vira gerúndio ("Salvando…") e acende a barra do
+   topo. Checklist do "pronto": `grep -n 'type="submit"'` na tela = zero
+   botões crus. Confirmação em dinheiro/destrutivo = `confirmar()` de
+   `app/_components/dialogo-confirmar.tsx`, no `onSubmit` do form (nunca no
+   `onClick` do botão). Sem isso, dois cliques viram duas cobranças.
 7. **Rota nova é FECHADA por padrão.** Para torná-la pública, acrescente na
    lista de `lib/supabase/middleware.ts` — e saiba que prefixo largo demais abre
    o app inteiro (há teste protegendo).
