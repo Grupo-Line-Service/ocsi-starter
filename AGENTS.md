@@ -36,6 +36,9 @@ como **defeito** uma cobrança que era **legítima** (SAAS-224).
 **Várias equipes consomem os mesmos documentos. Documento desatualizado não erra
 sozinho — ele multiplica o erro pelo número de times.**
 
+Versão integral e o histórico do porquê:
+[`ocsi-framework/docs/governance/AGENT_OPERATING_MODEL.md`](https://github.com/Grupo-Line-Service/ocsi-framework/blob/main/docs/governance/AGENT_OPERATING_MODEL.md).
+
 ### 1.1 Alterou um campo ou conceito? VARRA tudo que ele toca — antes do "pronto"
 
 > Regra do dono, 12/08/2026: *"sempre que for alterar ou corrigir algo, precisa
