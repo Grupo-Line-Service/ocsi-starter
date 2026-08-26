@@ -52,6 +52,30 @@ Mudança estrutural no `saas-gestao` (esqueleto, shell, convenção, versão de
 dependência) **precisa vir para cá** — senão o próximo produto nasce velho, que
 é exatamente o problema que este template existe para resolver.
 
+## E quando o PRODUTO conserta algo do template
+
+**A regra vale nos dois sentidos.** Se um produto criado a partir daqui teve que
+corrigir, completar ou contornar algo que veio do template, **a correção volta
+para cá, no mesmo dia** — não no fim da tarefa, não "quando sobrar tempo".
+
+O motivo é o custo: um defeito do starter não dói no starter. Ele dói **semanas
+depois, no produto de outra pessoa**, com um erro que não parece de template e
+manda procurar no lugar errado. Quem corrigiu já pagou o preço do diagnóstico;
+não trazer a correção obriga o próximo a pagar de novo.
+
+Vale para: arquivo que faltava, configuração que apontava para o vazio, script
+que não rodava, convenção que só funcionava por acaso, dependência desalinhada.
+
+**Não** vale para regra de negócio, integração contratada nem esquema de produto
+— isso é privado e fica lá (ver a tabela do "❌ NUNCA entra").
+
+### Regra sem mecanismo não segura
+
+Sempre que der, a correção vem **com o teste que a protege**. `tests/template-integro.test.ts`
+é o exemplo: nasceu de um stub que a configuração prometia e o template não
+trazia, e agora falha se qualquer caminho do `vitest.config.ts` apontar para
+arquivo inexistente. Um aviso que depende de alguém lembrar já falhou.
+
 ⚠️ **As versões de Next, React e Supabase espelham o gabarito.** Não "atualize
 porque saiu nova": alinhe com o `saas-gestao`. Divergir quebra de formas que
 parecem outro assunto — `@supabase/ssr` 0.5 contra 0.12 derrubou 15 pontos do
