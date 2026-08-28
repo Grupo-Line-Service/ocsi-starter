@@ -141,6 +141,44 @@ Linear, ou abra PR. Decisão aprovada vira teste, não vira só comentário.
 | Governança que vale para todos | `ocsi-framework/docs/governance/` |
 | Execução / tarefa | Linear (Iniciativa → Projeto → Issue) |
 | Código | GitHub, commit explicando **por quê** |
+
+### 5. Onde cada SEGREDO mora — decide QUEM CONSOME, não que tipo é
+
+Antes de guardar uma credencial, não pergunte "que tipo de segredo é este". Pergunte
+**quem vai consumir**. Cada consumidor tem um destino diferente, e usar o errado ou
+quebra, ou vaza.
+
+| Quem consome | Onde mora | Exemplo no grupo |
+|---|---|---|
+| **Aplicação com banco** | coluna cifrada na própria tabela | `bots_telegram.token_cifrado`; cofre de certificados A1 (envelope com KEK) |
+| **Programa que lê configuração no boot** | `.env` do compose, modo `600`, no `.gitignore` | `SECRETS_KEY` do OMNIVIS; token do bot do NOC |
+| **Gente digitando** (Winbox, painel, celular em campo) | **cofre do grupo** — `cofre.grupolineservice.com.br` | senha de MikroTik, OLT, Proxmox, portal de fornecedor |
+| **Agente/serviço chamando API de terceiro** | **Gateway de Conexões** do SaaS (`/plataforma/conexoes`) | GitHub, Linear, Notion, Vercel, Supabase, Hostinger |
+
+⚠️ **O Gateway é *use-only* por projeto:** ele sabe **usar** a credencial e **nunca a
+devolve** (o valor vive no Supabase Vault, a tabela guarda só um UUID, a leitura é
+`service_role`). É acerto de segurança — e é exatamente por isso que ele **não serve** para
+o que uma pessoa precisa **ler de volta** às duas da manhã. Para isso existe o cofre.
+
+**Regras que não se negociam:**
+
+1. **Segredo nunca passa por chat, commit, ticket ou print.** Quem é responsável copia
+   **direto da origem para o destino** — ninguém intermedia o valor. Precisa passar por um
+   arquivo? Arquivo temporário, e **sobrescrever antes de apagar**.
+2. **Existe padrão no ambiente? Aponte o padrão — não desenhe outro.** Antes de propor
+   destino novo, leia onde os segredos parecidos já moram.
+3. **Chave de CIFRA tem cópia fora do sistema que a usa.** Token de acesso se revoga e se
+   gera outro; **chave de cifra, não** — perdê-la mata o dado cifrado junto. Cópia no mesmo
+   servidor é o mesmo domínio de falha: **não é cópia**.
+4. **Chave que não se exporta muda a pergunta.** Se o provedor não devolve o valor (ex.:
+   variável do tipo *Secret* na Vercel), **não tente arrancá-la** — escrever código para
+   vazar o próprio segredo troca proteção real por uma cópia a mais. Guarde a
+   **matéria-prima que reconstrói** o que ela protegia.
+5. **Guardado ≠ recuperável.** Cópia que nunca foi restaurada não conta como cópia. Backup
+   se prova restaurando, não conferindo que o arquivo existe.
+
+Referência completa: `ocsi-framework/docs/security/chaves-e-ambiente.md` — inventário por
+produto, com quais chaves são revogáveis e quais são de perda irreversível.
 <!-- OCSI:GOVERNANCA:FIM -->
 
 Este repositório segue as instruções de [`CLAUDE.md`](CLAUDE.md) — leia antes de
