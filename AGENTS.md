@@ -179,6 +179,32 @@ o que uma pessoa precisa **ler de volta** às duas da manhã. Para isso existe o
 
 Referência completa: `ocsi-framework/docs/security/chaves-e-ambiente.md` — inventário por
 produto, com quais chaves são revogáveis e quais são de perda irreversível.
+### 6. Entregue a MUDANÇA primeiro; a documentação vem DEPOIS
+
+> Regra do dono, 02/09/2026: *"você está demorando demais para fazer as coisas,
+> 30 minutos e nada"* → *"faz a mudança primeiro e documenta depois"*.
+
+A ordem de uma frente é: **validada e no ar → aviso curto do que mudou → só
+então** `CLAUDE.md`, Linear e Notion.
+
+Ele testa na TELA, e fica parado enquanto o agente escreve issue e diário.
+Naquele dia duas frentes ficaram prontas cedo e ele só soube no fim, junto de
+três blocos de texto que não mudavam nada para ele naquele minuto — o trabalho
+existia, mas para quem esperava o sistema estava parado.
+
+**O que NÃO mudou:**
+
+1. **"Documenta tudo" continua sendo os TRÊS canais** — GitHub (`CLAUDE.md` do
+   produto), Linear e Notion (seção 4). Mudou o **quando**, não o **se**.
+2. **A medição ANTES de mexer continua obrigatória** (seções 1 e 1.1). O que sai
+   da frente é a documentação — nunca a conferência que evita inventar causa,
+   nem a varredura das superfícies.
+3. **Validação local segue sendo a barreira**: typecheck, testes e build antes do
+   push, conferindo o EXIT CODE.
+
+Duas frentes seguidas: **entregue as duas e documente as duas juntas**, em vez de
+intercalar documentação entre elas.
+
 <!-- OCSI:GOVERNANCA:FIM -->
 
 Este repositório segue as instruções de [`CLAUDE.md`](CLAUDE.md) — leia antes de
