@@ -128,9 +128,26 @@ e perdiam campo. A receita é esta, sem etapa opcional:
 
 ### 3. Um agente por vez no repositório
 
-Antes de escrever, confira branch e commits recentes. Se outro agente está
-trabalhando ali, **não escreva de fora** — entregue o texto pronto por issue no
-Linear, ou abra PR. Decisão aprovada vira teste, não vira só comentário.
+Antes de escrever, confira branch e commits recentes — **e o que ainda NÃO foi
+commitado, que é onde o outro agente está agora**:
+
+- `git status --porcelain` — árvore suja é alguém no meio de um trabalho, mesmo
+  que o último commit seja de semanas atrás;
+- arquivo do repo **modificado nos últimos minutos** = agente ativo neste
+  instante;
+- **número sequencial** (issue, versão, migração) se lê na FONTE no instante de
+  escrever — o próximo número não é seu de reservar.
+
+Se outro agente está ali, **não escreva de fora** — entregue o texto pronto por
+issue no Linear, ou abra PR. Decisão aprovada vira teste, não vira só comentário.
+
+🔴 **Medido em 09/09/2026, com esta regra já no ar** (dono: *"tive muito stress
+com vários agentes alterando o mesmo arquivo, quase virou um loop"*): um
+repositório com o último commit de **18 dias atrás** tinha **3 arquivos sujos**,
+outro tinha **21**, e um terceiro tinha arquivos **tocados nos últimos 30
+minutos**. "Commits recentes" não enxergava nenhum dos três — e no mesmo dia
+**dois números de issue colidiram**, escritos em quatro arquivos antes de a
+issue existir. Conferir só o que já foi commitado é conferir o passado.
 
 ### 4. Onde cada coisa é registrada
 
