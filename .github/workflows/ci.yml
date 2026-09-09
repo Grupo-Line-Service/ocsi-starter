@@ -47,7 +47,7 @@ jobs:
 
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.116.0
 
       - name: Subir Supabase local (aplica as migrações)
         # É AQUI que se prova que uma instalação NOVA funciona. Produção já tem
