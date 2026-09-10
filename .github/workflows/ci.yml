@@ -7,7 +7,7 @@ on:
 
 jobs:
   qualidade:
-    name: typecheck + build
+    name: lint + typecheck + build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +19,12 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
+
+      # O script `lint` existia e o CI nao o chamava: ate 10/09/2026 ele so
+      # rodava se alguem digitasse. Portao que ninguem chama nao e portao --
+      # e este arquivo e o TEMPLATE, entao a falta nascia em todo produto novo.
+      - name: Lint
+        run: npm run lint
 
       - name: Checagem de tipos
         run: npm run typecheck
